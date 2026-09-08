@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الإنتاج — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>لوحة الإنتاج البصرية</h1></div>
+<div class="note">شريط المراحل: ✓ مكتملة ● جارية ○ لم تبدأ — تخطيط CSS Grid بحت (FR-PRODCTRL-03).</div>
+<div class="kanban" id="board"></div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "production", breadcrumbs: ['الرئيسية', 'الإنتاج', 'اللوحة البصرية'] });
+</script>
+<script>
+(function(){
+  var cols={'لم يبدأ':[],'جاري التنفيذ':[],'متوقف':[],'مكتمل':[],'جاهز للتسليم':[]};
+  jobs.forEach(function(j){
+    var mini=j.stages.map(function(s,i){return i<j.stage?'✓':(i===j.stage?'●':'○');}).join(' ');
+    var pct=Math.round(j.stage/(j.stages.length-1)*100);
+    cols[j.status].push('<div class="kanban-card"><div class="job-id">'+j.id+'</div><div>'+j.customer+'</div>'+
+      '<div class="mini-steps">'+mini+'</div>'+
+      '<div style="color:var(--color-gray)">'+j.stages[j.stage]+' — '+pct+'%</div>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div></div>');
+  });
+  document.getElementById('board').innerHTML=Object.keys(cols).map(function(k){
+    return '<div class="kanban-col"><h3>'+k+' ('+cols[k].length+')</h3>'+(cols[k].join('')||'<p style="text-align:center;color:#999;font-size:12px">لا توجد أوامر</p>')+'</div>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

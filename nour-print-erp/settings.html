@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الإعدادات — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+<div class="page-title"><h1>إعدادات النظام</h1></div>
+<div class="card">
+  <h2>بيانات المطبعة (FR-SET-01)</h2>
+  <div class="form-row">
+    <div class="form-group"><label>اسم المطبعة</label><input value="مطبعة النور — El Nour Print"></div>
+    <div class="form-group"><label>الهاتف</label><input value="01000000000"></div>
+    <div class="form-group"><label>WhatsApp</label><input value="01000000000"></div>
+    <div class="form-group"><label>العملة</label><select><option>جنيه مصري (ج.م)</option><option>دولار ($)</option></select></div>
+  </div>
+  <div class="form-group"><label>العنوان</label><input value="القاهرة — جمهورية مصر العربية"></div>
+  <div class="form-group"><label>الشعار</label><input type="file" accept="image/*"></div>
+</div>
+<div class="card">
+  <h2>القيم الافتراضية للتسعير (FR-SET-02)</h2>
+  <div class="note">هذا هو <b>المكان الوحيد</b> المخصص مستقبلًا لتعديل أسعار الخامات ونِسَب الهالك وهوامش الربح — تطبيقًا لمبدأ "لا أسعار ثابتة داخل الكود" (<b>CON-06 / FR-RULE-01</b>). القيم تُقرأ مباشرة من mock-data.js.</div>
+  <form onsubmit="event.preventDefault();alert('تم حفظ الإعدادات (شكلي)');">
+    <div class="form-row" id="defaults"></div>
+    <h2 style="margin-top:18px">إعدادات عامة (FR-SET-02)</h2>
+    <div class="form-row">
+      <div class="form-group"><label>وحدات القياس</label><select><option>سم</option><option>مم</option><option>بوصة</option></select></div>
+      <div class="form-group"><label>طرق الدفع</label><select><option>نقدي، تحويل، دفعة مقدمة، باقي حساب</option></select></div>
+      <div class="form-group"><label>الضرائب</label><input disabled placeholder="مستقبلًا"></div>
+    </div>
+    <button class="btn btn-primary">حفظ الإعدادات</button>
+  </form>
+</div>
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "settings", breadcrumbs: ["الرئيسية","الإعدادات"] });
+var labels={cardboardSheetPrice:'سعر ورقة الكرتون',paperSheetPrice:'سعر ورقة الورق',printingPerBox:'طباعة الوحدة',laborPerBox:'عمالة الوحدة',electricityPerBox:'كهرباء وتشغيل الوحدة',gluePerBox:'غراء الوحدة',spongeVelvetPerBox:'إسفنج ومخمل الوحدة',dieCuttingMachineCost:'تكلفة السكينة',breakingCost:'تكلفة التكسير',miscExpenses:'المصروفات المتنوعة',wastePercentDefault:'نسبة الهالك %',profitMarginDefault:'هامش الربح %'};
+var wrap=document.getElementById('defaults');
+Object.keys(pricingDefaults).forEach(function(k){
+  wrap.innerHTML+='<div class="form-group"><label>'+labels[k]+'</label><input type="number" step="0.01" value="'+pricingDefaults[k]+'" data-fr="CON-06"></div>';
+});
+</script>
+</body>
+</html>

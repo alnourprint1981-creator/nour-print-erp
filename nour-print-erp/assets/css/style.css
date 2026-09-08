@@ -1,0 +1,261 @@
+/* ============================================================
+   Nour Print ERP — ملف الأنماط العام (Phase 0 / T-002)
+   هوية Nour Print: Navy / Orange / White / Gray
+   ============================================================ */
+:root{
+  --color-navy:#1F3864;
+  --color-navy-dark:#152A4A;
+  --color-orange:#C55A11;
+  --color-orange-light:#E8874A;
+  --color-white:#FFFFFF;
+  --color-gray:#595959;
+  --color-light-gray:#F2F2F2;
+  --color-border:#D9D9D9;
+  --color-green:#2E7D32;
+  --color-red:#C62828;
+  --color-yellow:#B8860B;
+  --sidebar-w:230px;
+  --header-h:60px;
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{direction:rtl}
+body{
+  direction:rtl;
+  font-family:"Tahoma","Arial",sans-serif;
+  background:var(--color-light-gray);
+  color:#222;
+  font-size:14px;
+}
+a{color:var(--color-navy);text-decoration:none}
+a:hover{color:var(--color-orange)}
+
+/* ---------- الهيكل العام ---------- */
+#app-header{
+  position:fixed;top:0;right:0;left:0;height:var(--header-h);
+  background:var(--color-navy);color:#fff;z-index:100;
+  display:flex;align-items:center;gap:16px;padding:0 20px;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+#app-header .logo{display:flex;align-items:center;gap:10px}
+#app-header .logo img{height:44px;background:#fff;border-radius:6px;padding:2px}
+#app-header .logo span{font-weight:bold;font-size:16px}
+#app-header .search{flex:1;max-width:420px}
+#app-header .search input{
+  width:100%;padding:8px 12px;border:none;border-radius:20px;font-family:inherit;
+}
+#app-header .user{margin-inline-start:auto;font-size:13px;opacity:.95}
+
+#app-sidebar{
+  position:fixed;top:var(--header-h);right:0;bottom:0;width:var(--sidebar-w);
+  background:var(--color-navy-dark);overflow-y:auto;z-index:99;padding:10px 0;
+}
+#app-sidebar a{
+  display:flex;align-items:center;gap:8px;color:#D6E0F0;padding:10px 18px;font-size:13.5px;
+  border-right:4px solid transparent;
+}
+#app-sidebar a:hover{background:rgba(255,255,255,.08);color:#fff}
+#app-sidebar a.active{background:var(--color-orange);color:#fff;border-right-color:#fff;font-weight:bold}
+#app-sidebar .nav-section{color:#8FA3C4;font-size:11px;padding:12px 18px 4px}
+
+#breadcrumbs{
+  position:fixed;top:var(--header-h);right:var(--sidebar-w);left:0;height:42px;
+  background:#fff;border-bottom:1px solid var(--color-border);z-index:98;
+  display:flex;align-items:center;gap:8px;padding:0 24px;font-size:12.5px;color:var(--color-gray);
+}
+#breadcrumbs b{color:var(--color-navy)}
+#page-content{
+  margin:calc(var(--header-h) + 42px) var(--sidebar-w) 0 0;
+  padding:24px;
+}
+
+/* ---------- مكونات عامة ---------- */
+.page-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.page-title h1{font-size:20px;color:var(--color-navy)}
+.card{
+  background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);
+  padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.card h2{font-size:16px;color:var(--color-navy);margin-bottom:14px;border-bottom:2px solid var(--color-orange);padding-bottom:8px}
+
+.btn{
+  display:inline-block;padding:8px 18px;border:none;border-radius:var(--radius);
+  font-family:inherit;font-size:13px;cursor:pointer;text-align:center;
+}
+.btn-primary{background:var(--color-navy);color:#fff}
+.btn-primary:hover{background:var(--color-navy-dark)}
+.btn-secondary{background:var(--color-orange);color:#fff}
+.btn-secondary:hover{background:var(--color-orange-light)}
+.btn-outline{background:#fff;color:var(--color-navy);border:1px solid var(--color-navy)}
+.btn-sm{padding:4px 10px;font-size:12px}
+
+.table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+.table th,.table td{border:1px solid var(--color-border);padding:8px 10px;text-align:right}
+.table th{background:var(--color-navy);color:#fff;font-weight:bold}
+.table tr:nth-child(even) td{background:#FAFAFA}
+.table tr.low-stock td{background:#FDECEA}
+.table .num{text-align:left;direction:ltr}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;margin-bottom:5px;font-weight:bold;font-size:13px;color:var(--color-gray)}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:8px 10px;border:1px solid var(--color-border);border-radius:6px;font-family:inherit;font-size:13px;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--color-orange);box-shadow:0 0 0 2px rgba(197,90,17,.15);
+}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11.5px;font-weight:bold;color:#fff}
+.badge-green{background:var(--color-green)}.badge-red{background:var(--color-red)}
+.badge-yellow{background:var(--color-yellow)}.badge-navy{background:var(--color-navy)}
+.badge-orange{background:var(--color-orange)}.badge-gray{background:var(--color-gray)}
+
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.kpi{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:16px;border-top:4px solid var(--color-navy)}
+.kpi.orange{border-top-color:var(--color-orange)}
+.kpi.green{border-top-color:var(--color-green)}
+.kpi.red{border-top-color:var(--color-red)}
+.kpi .label{font-size:12px;color:var(--color-gray);margin-bottom:6px}
+.kpi .value{font-size:22px;font-weight:bold;color:var(--color-navy)}
+.kpi.orange .value{color:var(--color-orange)}
+.kpi.green .value{color:var(--color-green)}
+.kpi.red .value{color:var(--color-red)}
+
+/* جدول تفصيل التكلفة (القسم 7.4) */
+.cost-table td:last-child{text-align:left;direction:ltr}
+.cost-table .subtotal td{background:#EAF0FA;font-weight:bold}
+.cost-table .unit-cost td{background:#FFF4EC;font-weight:bold}
+.cost-table .sale-price td{background:var(--color-orange);color:#fff;font-weight:bold;font-size:15px}
+.cost-table .grand-total td{background:var(--color-navy);color:#fff;font-weight:bold;font-size:15px}
+
+.note{
+  background:#FFF8F0;border:1px solid var(--color-orange);border-radius:var(--radius);
+  padding:12px 14px;margin-bottom:16px;font-size:12.5px;color:#7A3A08;
+}
+.note b{color:var(--color-orange)}
+
+/* تبويبات */
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--color-border);margin-bottom:16px;flex-wrap:wrap}
+.tabs button{
+  background:#fff;border:1px solid var(--color-border);border-bottom:none;border-radius:8px 8px 0 0;
+  padding:9px 18px;font-family:inherit;font-size:13px;cursor:pointer;color:var(--color-gray);
+}
+.tabs button.active{background:var(--color-navy);color:#fff;border-color:var(--color-navy);font-weight:bold}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* Stepper دورة العمل */
+.stepper{display:flex;flex-wrap:wrap;gap:0;margin:10px 0}
+.stepper .step{
+  flex:1;min-width:110px;text-align:center;padding:10px 6px;font-size:12px;
+  background:#E4E9F2;color:var(--color-gray);border-inline-start:3px solid #fff;position:relative;
+}
+.stepper .step.done{background:var(--color-green);color:#fff}
+.stepper .step.current{background:var(--color-orange);color:#fff;font-weight:bold}
+
+/* لوحة كانبان */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start}
+.kanban-col{background:#E9EDF5;border-radius:var(--radius);padding:10px;min-height:200px}
+.kanban-col h3{font-size:13px;color:var(--color-navy);margin-bottom:10px;text-align:center}
+.kanban-card{background:#fff;border-radius:6px;padding:10px;margin-bottom:10px;border-inline-start:4px solid var(--color-orange);box-shadow:0 1px 2px rgba(0,0,0,.08);font-size:12px}
+.kanban-card .job-id{font-weight:bold;color:var(--color-navy)}
+.mini-steps{font-size:13px;letter-spacing:2px;margin:6px 0;color:var(--color-green)}
+.progress{height:6px;background:#E4E9F2;border-radius:3px;overflow:hidden;margin-top:6px}
+.progress i{display:block;height:100%;background:var(--color-orange)}
+
+/* قائمة الـ Prepress Checklist */
+.checklist{list-style:none}
+.checklist li{padding:7px 4px;border-bottom:1px dashed var(--color-border);font-size:13px}
+.checklist input{margin-inline-end:8px}
+
+/* صفحة الدخول */
+.login-page{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--color-navy) 0%,var(--color-navy-dark) 100%);
+}
+.login-box{background:#fff;border-radius:12px;padding:36px;width:380px;box-shadow:0 10px 40px rgba(0,0,0,.35);text-align:center}
+.login-box img{width:130px;margin-bottom:14px}
+.login-box h1{font-size:18px;color:var(--color-navy);margin-bottom:4px}
+.login-box p{font-size:12px;color:var(--color-gray);margin-bottom:20px}
+.login-box .btn{width:100%;padding:11px;margin-top:6px}
+
+/* ===================== التجاوب الكامل ===================== */
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.card{overflow-x:auto}
+
+/* زر القائمة للموبايل */
+#menu-toggle{
+  display:none;background:var(--color-orange);border:none;color:#fff;
+  width:42px;height:42px;border-radius:8px;font-size:20px;cursor:pointer;flex-shrink:0;
+}
+#sidebar-overlay{display:none}
+
+/* ---------- تابلت (≤1024px) ---------- */
+@media (max-width:1024px){
+  :root{--sidebar-w:190px}
+  .grid-cards{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  .kanban{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ---------- موبايل (≤768px) ---------- */
+@media (max-width:768px){
+  :root{--sidebar-w:250px;--header-h:56px}
+  #menu-toggle{display:block}
+  #app-header{gap:10px;padding:0 12px}
+  #app-header .logo span{font-size:13px}
+  #app-header .logo img{height:36px}
+  #app-header .search{display:none} /* البحث العام يُخفى على الموبايل — البحث داخل الصفحات متاح */
+  #app-header .user{font-size:11px}
+
+  /* Sidebar منزلق (off-canvas) */
+  #app-sidebar{
+    width:var(--sidebar-w) !important;
+    transform:translateX(100%);transition:transform .25s ease;
+    box-shadow:-4px 0 15px rgba(0,0,0,.3);
+  }
+  #app-sidebar.open{transform:translateX(0)}
+  #app-sidebar a{font-size:13px !important;padding:12px 16px !important}
+  #app-sidebar a span{display:inline !important}
+  #sidebar-overlay{
+    display:block;position:fixed;inset:0;top:var(--header-h);
+    background:rgba(0,0,0,.45);z-index:98;opacity:0;pointer-events:none;transition:opacity .25s;
+  }
+  #sidebar-overlay.show{opacity:1;pointer-events:auto}
+
+  #breadcrumbs{right:0 !important;padding:0 12px;font-size:11.5px}
+  #page-content{margin:calc(var(--header-h) + 42px) 0 0 0 !important;padding:14px}
+
+  .page-title{flex-wrap:wrap;gap:10px}
+  .page-title h1{font-size:17px}
+  .btn{padding:10px 16px;font-size:14px} /* أهداف لمس أكبر */
+  .btn-sm{padding:6px 12px;font-size:13px}
+
+  .form-row{grid-template-columns:1fr !important;gap:10px}
+  .form-group input,.form-group select,.form-group textarea{padding:11px;font-size:15px}
+  label{font-size:15px}
+
+  .kpi{padding:12px}
+  .kpi .value{font-size:18px}
+
+  .table{min-width:640px;font-size:12.5px} /* تمرير أفقي للجداول العريضة */
+  .table th,.table td{padding:7px 8px;white-space:nowrap}
+  .card .table{min-width:560px}
+
+  .kanban{grid-template-columns:1fr !important}
+  .stepper{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .stepper .step{min-width:100px;font-size:11px}
+  .tabs{overflow-x:auto;flex-wrap:nowrap}
+  .tabs button{padding:10px 14px;font-size:13px;white-space:nowrap}
+
+  .cost-table{min-width:320px !important;font-size:14px}
+  .note{font-size:12.5px;padding:10px}
+
+  .grid-cards{grid-template-columns:1fr 1fr}
+  .login-box{width:92%;padding:26px}
+}
+
+/* ---------- موبايل صغير جدًا (≤400px) ---------- */
+@media (max-width:400px){
+  .grid-cards{grid-template-columns:1fr}
+  .kpi .value{font-size:16px}
+}

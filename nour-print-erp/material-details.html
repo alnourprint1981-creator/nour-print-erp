@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعديل خامة — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1 id="mtitle">تعديل خامة</h1></div>
+<div class="note"><b>مبدأ التجميد (Snapshot):</b> أي تغيير هنا سيؤثر على <b>عمليات التسعير الجديدة فقط</b>، ولن يغيّر عروض الأسعار المحفوظة سابقًا (<b>FR-SNAP-03</b>). عند تغيير أي سعر أساسي يُعاد حساب التكلفة والربح وسعر البيع تلقائيًا دون تعديل الكود (<b>FR-RULE-06</b>).</div>
+<div class="card">
+  <form onsubmit="event.preventDefault();alert('تم حفظ السعر الجديد (شكلي)');">
+    <div class="form-row">
+      <div class="form-group"><label>كود الخامة</label><input id="code" disabled></div>
+      <div class="form-group"><label>الاسم</label><input id="name" disabled></div>
+      <div class="form-group"><label>النوع</label><input id="type" disabled></div>
+      <div class="form-group"><label>الوحدة</label><input id="unit" disabled></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>سعر الشراء الحالي</label><input id="price" type="number" step="0.01" data-fr="FR-MAT-03"></div>
+      <div class="form-group"><label>متوسط التكلفة</label><input id="avg" type="number" step="0.01" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>الرصيد الحالي</label><input id="stock" type="number" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>الحد الأدنى</label><input id="min" type="number" data-fr="FR-MAT-01"></div>
+    </div>
+    <button class="btn btn-primary" data-fr="AC-03">حفظ التعديلات</button>
+    <a href="materials.html" class="btn btn-outline">رجوع</a>
+  </form>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "materials", breadcrumbs: ['الرئيسية', 'الخامات', 'تعديل'] });
+</script>
+<script>
+(function(){
+  var i=parseInt(new URLSearchParams(location.search).get('i')||'0',10);
+  var m=materials[i]||materials[0];
+  document.getElementById('mtitle').textContent='تعديل: '+m.name;
+  ['code','name','type','unit'].forEach(function(k){document.getElementById(k).value=m[k];});
+  document.getElementById('price').value=m.purchasePrice;
+  document.getElementById('avg').value=m.avgCost;
+  document.getElementById('stock').value=m.currentStock;
+  document.getElementById('min').value=m.minStock;
+})();
+</script>
+</body>
+</html>

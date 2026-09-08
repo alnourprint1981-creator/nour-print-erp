@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المخزون — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>المخزون</h1></div>
+<div class="grid-cards" style="margin-bottom:18px">
+  <div class="kpi" data-fr="FR-INV-02"><div class="label">قيمة المخزون الحالي</div><div class="value" id="inv-value"></div></div>
+  <div class="kpi red" data-fr="FR-INV-02"><div class="label">أصناف قاربت على النفاد</div><div class="value" id="inv-low"></div></div>
+</div>
+<div class="card">
+  <h2>أرصدة الخامات</h2>
+  <table class="table">
+    <thead><tr><th>الكود</th><th>الخامة</th><th>الوحدة</th><th>سعر الشراء</th><th>الرصيد</th><th>الحد الأدنى</th><th>قيمة الرصيد</th><th>الحالة</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p style="margin-top:12px"><a href="inventory-transactions.html" class="btn btn-sm btn-outline">حركات المخزون</a></p>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "inventory", breadcrumbs: ['الرئيسية', 'المخزون'] });
+</script>
+<script>
+(function(){
+  var tb=document.getElementById('rows'),total=0,low=0;
+  materials.forEach(function(m){
+    var v=m.purchasePrice*m.currentStock; total+=v;
+    var isLow=m.currentStock<m.minStock; if(isLow)low++;
+    var tr=document.createElement('tr');
+    if(isLow)tr.className='low-stock';
+    tr.innerHTML='<td>'+m.code+'</td><td><b>'+m.name+'</b></td><td>'+m.unit+'</td><td class="num">'+m.purchasePrice+'</td><td class="num">'+m.currentStock+'</td><td class="num">'+m.minStock+'</td><td class="num">'+v.toLocaleString()+'</td>'+
+      '<td>'+(isLow?'<span class="badge badge-red">قارب على النفاد</span>':'<span class="badge badge-green">متوفر</span>')+'</td>';
+    tb.appendChild(tr);
+  });
+  document.getElementById('inv-value').textContent=total.toLocaleString()+' ج.م';
+  document.getElementById('inv-low').textContent=low+' صنف';
+})();
+</script>
+</body>
+</html>

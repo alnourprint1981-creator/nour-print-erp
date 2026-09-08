@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الهارد كوفر — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>تصنيع الهارد كوفر</h1></div>
+<div class="note">قسم مستقل بطريقة تسعير وإنتاج مختلفة عن باقي المنتجات (<b>FR-HC-01</b>).</div>
+<div class="card">
+  <h2>مكونات العلبة</h2>
+  <table class="table">
+    <thead><tr><th>القسم</th><th>الخامة</th><th>الكمية</th><th>سعر الوحدة (من الافتراضيات)</th></tr></thead>
+    <tbody id="hc-rows"></tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>العمليات</h2>
+  <table class="table">
+    <thead><tr><th>العملية</th><th>التفاصيل</th></tr></thead>
+    <tbody>
+      <tr><td>الطباعة</td><td>ورق كوشيه 300جم — 4 ألوان</td></tr>
+      <tr><td>التكسير</td><td>تكسير الكرتون للقاع والغطاء والقاعدة</td></tr>
+      <tr><td>القص</td><td>قص الورق والمخمل للمقاس</td></tr>
+      <tr><td>التجميع</td><td>لصق القطع بالغراء الحراري وتجميع العلبة</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "hardcover", breadcrumbs: ['الرئيسية', 'الهارد كوفر'] });
+</script>
+<script>
+(function(){
+  var d=pricingDefaults;
+  var rows=[
+    ['القاعدة','كرتون مقوى 2مم','1 قطعة/علبة',d.cardboardSheetPrice],
+    ['القاع','كرتون مقوى 2مم + ورق كوشيه','1 قطعة/علبة',d.cardboardSheetPrice],
+    ['الغطاء','كرتون مقوى 2مم + ورق كوشيه','1 قطعة/علبة',d.cardboardSheetPrice],
+    ['الورب (التغليف)','ورق كوشيه 300جم','1 ورقة/علبة',d.paperSheetPrice],
+    ['المخمل','مخمل أحمر','0.4 متر/علبة','حسب سعر المتر'],
+    ['الإسفنج','إسفنج 3مم','0.6 متر/علبة','حسب سعر المتر'],
+    ['الغراء','غراء حراري','حصة/علبة',d.gluePerBox+' ج.م']
+  ];
+  var tb=document.getElementById('hc-rows');
+  rows.forEach(function(r){
+    tb.innerHTML+='<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="num">'+r[3]+'</td></tr>';
+  });
+})();
+</script>
+</body>
+</html>

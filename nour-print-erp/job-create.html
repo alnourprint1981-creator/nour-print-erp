@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أمر تشغيل جديد — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>أمر تشغيل جديد</h1></div>
+<div class="note">يُفضَّل إنشاء أمر التشغيل بتحويل عرض سعر مقبول لضمان تجميد التكلفة (Snapshot).</div>
+<div class="card">
+  <form onsubmit="event.preventDefault();alert('تم إنشاء أمر التشغيل (شكلي)');">
+    <div class="form-row">
+      <div class="form-group"><label>العميل</label><select id="j-c"></select></div>
+      <div class="form-group"><label>المنتج</label><select id="j-p"></select></div>
+      <div class="form-group"><label>الكمية</label><input type="number" min="1" data-fr="FR-JOB-01"></div>
+      <div class="form-group"><label>المقاس (ط×عر×ارتفاع سم)</label><input placeholder="30 × 45 × 30" data-fr="FR-JOB-01"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>اسم ملف التصميم</label><input data-fr="FR-DESIGN-01"></div>
+      <div class="form-group"><label>تاريخ البدء</label><input type="date" data-fr="FR-JOB-01"></div>
+      <div class="form-group"><label>موعد التسليم</label><input type="date" data-fr="FR-JOB-01"></div>
+      <div class="form-group"><label>الأولوية</label><select data-fr="FR-JOB-02"><option>عادي</option><option>عاجل</option><option>عاجل جدًا</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>المسؤول</label><select><option>محمود — إنتاج</option><option>كريم — تصميم</option></select></div>
+      <div class="form-group"><label>الماكينة</label><select id="j-m"></select></div>
+    </div>
+    <div class="form-group"><label>الخامات المطلوبة (من العرض المحوَّل)</label><textarea rows="2" placeholder="كرتون مقوى، ورق كوشيه، مخمل، غراء..." data-fr="FR-JOB-01"></textarea></div>
+    <div class="form-group"><label>ملاحظات</label><textarea rows="2"></textarea></div>
+    <button class="btn btn-primary" data-fr="AC-06">إنشاء أمر التشغيل</button>
+    <a href="jobs.html" class="btn btn-outline">إلغاء</a>
+  </form>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "jobs", breadcrumbs: ['الرئيسية', 'أوامر التشغيل', 'أمر جديد'] });
+</script>
+<script>
+customers.forEach(function(c){document.getElementById('j-c').innerHTML+='<option>'+c.name+'</option>';});
+products.forEach(function(p){document.getElementById('j-p').innerHTML+='<option>'+p.code+'</option>';});
+machines.forEach(function(m){document.getElementById('j-m').innerHTML+='<option>'+m.name+'</option>';});
+</script>
+</body>
+</html>

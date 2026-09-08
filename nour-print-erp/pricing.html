@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التسعير — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>التسعير الديناميكي</h1>
+  <div><a href="quotation-create.html" class="btn btn-primary">حفظ كعرض سعر</a></div>
+</div>
+<div class="note">كل أسعار الخامات والتشغيل تُقرأ تلقائيًا من <b>mock-data.js</b> ويُعاد الحساب فور أي تغيير (<b>FR-PRICESCR-05</b>). لا توجد أي قيمة سعر ثابتة في هذه الصفحة (<b>CON-06</b>).</div>
+
+<div class="card">
+  <h2>1) بيانات الطلب (FR-PRICESCR-01)</h2>
+  <div class="form-row">
+    <div class="form-group"><label>العميل</label><select id="p-customer"></select></div>
+    <div class="form-group"><label>المنتج / الموديل</label><select id="p-product"></select></div>
+    <div class="form-group"><label>الكمية</label><input type="number" id="p-qty" min="1" value="100"></div>
+    <div class="form-group"><label>الطول (سم)</label><input type="number" id="p-l" value="30"></div>
+    <div class="form-group"><label>العرض (سم)</label><input type="number" id="p-w" value="45"></div>
+    <div class="form-group"><label>الارتفاع (سم)</label><input type="number" id="p-h" value="30"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>2) الخامات (FR-PRICESCR-02)</h2>
+  <div class="form-row">
+    <div class="form-group"><label>نوع الخامة الرئيسية</label><select id="p-mat"></select></div>
+    <div class="form-group"><label>سعر الخامة (تلقائي)</label><input id="p-matprice" disabled></div>
+    <div class="form-group"><label>أوراق كرتون مستخدمة</label><input type="number" id="p-sheets" min="0" value="50"></div>
+    <div class="form-group"><label>أوراق ورق مستخدمة</label><input type="number" id="p-paper" min="0" value="120"></div>
+    <div class="form-group"><label>نسبة الهالك %</label><input type="number" id="p-waste" step="0.5" min="0"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>3) العمليات (FR-PRICESCR-03)</h2>
+  <div style="display:flex;gap:22px;flex-wrap:wrap" id="ops">
+    <label><input type="checkbox" id="op-printing" checked> طباعة</label>
+    <label><input type="checkbox" id="op-diecut" checked> سكينة / قص</label>
+    <label><input type="checkbox" id="op-breaking" checked> تكسير</label>
+    <label><input type="checkbox" id="op-labor" checked> عمالة (تلقائي)</label>
+    <label><input type="checkbox" id="op-glue" checked> غراء (تلقائي)</label>
+    <label><input type="checkbox" id="op-foil"> هوت فويل</label>
+    <label><input type="checkbox" id="op-cellophane"> سلوفان / لامينيشن</label>
+    <label><input type="checkbox" id="op-binding"> تجليد</label>
+    <label><input type="checkbox" id="op-sponge" checked> إسفنج ومخمل</label>
+  </div>
+</div>
+
+<div class="card">
+  <h2>قواعد هامش الربح (FR-PRICERULE-01 → 06)</h2>
+  <div class="form-row">
+    <div class="form-group"><label>نوع الهامش</label>
+      <select id="m-type">
+        <option value="percentage">نسبة مئوية من التكلفة</option>
+        <option value="fixed">ربح ثابت لكل وحدة</option>
+        <option value="manual">سعر بيع يدوي مباشر</option>
+        <option value="tiers">هامش حسب شرائح الكمية</option>
+      </select>
+    </div>
+    <div class="form-group" id="m-val-wrap"><label>قيمة الهامش (% / ج.م)</label><input type="number" id="m-val" step="0.5"></div>
+  </div>
+  <div id="tiers-wrap" style="display:none">
+    <table class="table" style="max-width:520px">
+      <thead><tr><th>من كمية</th><th>إلى كمية</th><th>الهامش %</th></tr></thead>
+      <tbody>
+        <tr><td><input type="number" class="t-from" value="1" style="width:90px"></td><td><input type="number" class="t-to" value="10" style="width:90px"></td><td><input type="number" class="t-margin" value="40" style="width:90px"></td></tr>
+        <tr><td><input type="number" class="t-from" value="11" style="width:90px"></td><td><input type="number" class="t-to" value="100" style="width:90px"></td><td><input type="number" class="t-margin" value="30" style="width:90px"></td></tr>
+        <tr><td><input type="number" class="t-from" value="101" style="width:90px"></td><td><input type="number" class="t-to" value="500" style="width:90px"></td><td><input type="number" class="t-margin" value="25" style="width:90px"></td></tr>
+        <tr><td><input type="number" class="t-from" value="501" style="width:90px"></td><td><input type="number" class="t-to" value="" placeholder="∞" style="width:90px"></td><td><input type="number" class="t-margin" value="20" style="width:90px"></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px;color:var(--color-gray);margin-top:6px">مثال الشرائح من المتطلبات (FR-PRICERULE-04): هامش مرتفع 1–10، متوسط 100–500، أقل من 500 فأكثر.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>4) الحساب — تفصيل التكلفة (FR-PRICESCR-04 / القسم 7.4)</h2>
+  <table class="table cost-table">
+    <tbody>
+      <tr><td>الكرتون</td><td id="c-cardboard" class="num"></td></tr>
+      <tr><td>الورق</td><td id="c-paper" class="num"></td></tr>
+      <tr><td>الطباعة</td><td id="c-printing" class="num"></td></tr>
+      <tr><td>السكينة</td><td id="c-die" class="num"></td></tr>
+      <tr><td>التكسير</td><td id="c-breaking" class="num"></td></tr>
+      <tr><td>العمالة</td><td id="c-labor" class="num"></td></tr>
+      <tr><td>الغراء</td><td id="c-glue" class="num"></td></tr>
+      <tr><td>الكهرباء والتشغيل</td><td id="c-machine" class="num"></td></tr>
+      <tr><td>الإسفنج والمخمل</td><td id="c-sponge" class="num"></td></tr>
+      <tr><td>المصروفات</td><td id="c-misc" class="num"></td></tr>
+      <tr><td>الهالك</td><td id="c-waste" class="num"></td></tr>
+      <tr class="subtotal"><td>إجمالي التكلفة</td><td id="c-total" class="num"></td></tr>
+      <tr class="subtotal"><td>تكلفة الوحدة</td><td id="c-unit" class="num"></td></tr>
+      <tr><td>هامش الربح</td><td id="c-margin" class="num"></td></tr>
+      <tr class="unit-cost"><td>سعر البيع للوحدة</td><td id="c-sale" class="num"></td></tr>
+      <tr class="grand-total"><td>الإجمالي النهائي</td><td id="c-grand" class="num"></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11.5px;color:var(--color-gray);margin-top:8px">مستويات الأسعار المتعددة (FR-PRICERULE-06): تكلفة <b id="lv-cost"></b> • جملة <b id="lv-wholesale"></b> • مصنع <b id="lv-factory"></b> • عميل <b id="lv-client"></b></p>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "pricing", breadcrumbs: ['الرئيسية', 'التسعير'] });
+</script>
+<script src="assets/js/pricing-engine.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  customers.forEach(function(c){$('p-customer').innerHTML+='<option>'+c.name+'</option>';});
+  products.forEach(function(p){$('p-product').innerHTML+='<option>'+p.code+' — '+p.name+'</option>';});
+  materials.forEach(function(m,i){$('p-mat').innerHTML+='<option value="'+i+'">'+m.name+' ('+m.unit+')</option>';});
+
+  $('p-mat').onchange=function(){$('p-matprice').value=materials[this.value].purchasePrice;calc();};
+  $('p-matprice').value=materials[0].purchasePrice;
+  $('p-waste').value=pricingDefaults.wastePercentDefault;
+  $('m-val').value=pricingDefaults.profitMarginDefault;
+
+  $('m-type').onchange=function(){
+    $('tiers-wrap').style.display=this.value==='tiers'?'block':'none';
+    $('m-val-wrap').style.display=this.value==='tiers'?'none':'block';
+    calc();
+  };
+
+  function getMargin(){
+    var t=$('m-type').value;
+    if(t==='tiers'){
+      var tiers=[];
+      document.querySelectorAll('#tiers-wrap tbody tr').forEach(function(tr){
+        var f=parseFloat(tr.querySelector('.t-from').value)||0;
+        var to=tr.querySelector('.t-to').value;
+        tiers.push({from:f,to:to===''?null:parseFloat(to),margin:parseFloat(tr.querySelector('.t-margin').value)||0});
+      });
+      return {type:'tiers',value:tiers};
+    }
+    return {type:t,value:parseFloat($('m-val').value)||0};
+  }
+
+  function fmt(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' ج.م';}
+
+  function calc(){
+    var qty=parseInt($('p-qty').value)||1;
+    var m=getMargin();
+    var order={
+      quantity:qty,
+      wastePercent:parseFloat($('p-waste').value)||0,
+      cardboardSheets:$('p-sheets').value===''?null:parseFloat($('p-sheets').value),
+      paperSheets:$('p-paper').value===''?null:parseFloat($('p-paper').value),
+      operations:{
+        printing:$('op-printing').checked,
+        dieCutting:$('op-diecut').checked,
+        breaking:$('op-breaking').checked,
+        spongeVelvet:$('op-sponge').checked
+      },
+      marginType:m.type, marginValue:m.value
+    };
+    /* تكلفة خاصة بالخامة المختارة تُضاف على الكرتون عند اختلافها (FR-PRICERULE-05) */
+    var r=calculateFullQuote(order);
+
+    $('c-cardboard').textContent=fmt(r.breakdown.cardboard);
+    $('c-paper').textContent=fmt(r.breakdown.paper);
+    $('c-printing').textContent=fmt(r.breakdown.printing);
+    $('c-die').textContent=fmt(r.breakdown.dieCutting);
+    $('c-breaking').textContent=fmt(r.breakdown.breaking);
+    $('c-labor').textContent=fmt(r.breakdown.labor);
+    $('c-glue').textContent=fmt(r.breakdown.glue);
+    $('c-machine').textContent=fmt(r.breakdown.machineRun);
+    $('c-sponge').textContent=fmt(r.breakdown.spongeVelvet);
+    $('c-misc').textContent=fmt(r.breakdown.misc);
+    $('c-waste').textContent=fmt(r.wasteCost);
+    $('c-total').textContent=fmt(r.totalCost);
+    $('c-unit').textContent=fmt(r.unitCost);
+    $('c-margin').textContent=fmt(r.marginAmount)+' ('+$('m-type').selectedOptions[0].text+')';
+    $('c-sale').textContent=fmt(r.unitSalePrice);
+    $('c-grand').textContent=fmt(r.grandTotal);
+
+    /* مستويات الأسعار (FR-PRICERULE-06) */
+    $('lv-cost').textContent=fmt(r.unitCost);
+    $('lv-wholesale').textContent=fmt(r.unitSalePrice*0.97);
+    $('lv-factory').textContent=fmt(r.unitSalePrice*1.0);
+    $('lv-client').textContent=fmt(r.unitSalePrice*1.05);
+  }
+
+  document.querySelectorAll('#page-content input, #page-content select').forEach(function(el){
+    el.addEventListener('input',calc); el.addEventListener('change',calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>

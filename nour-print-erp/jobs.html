@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أوامر التشغيل — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>أوامر التشغيل</h1><a href="job-create.html" class="btn btn-primary" data-fr="FR-JOB-01">+ أمر تشغيل جديد</a></div>
+<div class="card">
+  <div class="form-row" style="margin-bottom:14px">
+    <div class="form-group"><label>العميل</label><select id="f-c"><option value="">الكل</option></select></div>
+    <div class="form-group"><label>الحالة</label><select id="f-s"><option value="">الكل</option><option>لم يبدأ</option><option>جاري التنفيذ</option><option>جاهز للتسليم</option></select></div>
+    <div class="form-group"><label>الماكينة</label><select id="f-m"><option value="">الكل</option></select></div>
+  </div>
+  <table class="table">
+    <thead><tr><th data-fr="FR-JOB-01">رقم الأمر</th><th>العميل</th><th>المنتج</th><th>الكمية</th><th data-fr="FR-JOB-02">الأولوية</th><th>المرحلة الحالية</th><th data-fr="FR-JOB-03">التسليم المتوقع</th><th></th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "jobs", breadcrumbs: ['الرئيسية', 'أوامر التشغيل'] });
+</script>
+<script>
+(function(){
+  var pr={'عادي':'badge-gray','عاجل':'badge-yellow','عاجل جدًا':'badge-red'};
+  var tb=document.getElementById('rows');
+  var cs={},ms={};
+  jobs.forEach(function(j){cs[j.customer]=1;if(j.machine!=='—')ms[j.machine]=1;});
+  Object.keys(cs).forEach(function(c){document.getElementById('f-c').innerHTML+='<option>'+c+'</option>';});
+  Object.keys(ms).forEach(function(m){document.getElementById('f-m').innerHTML+='<option>'+m+'</option>';});
+  function draw(){
+    var fc=document.getElementById('f-c').value,fs=document.getElementById('f-s').value,fm=document.getElementById('f-m').value;
+    tb.innerHTML='';
+    jobs.filter(function(j){return(!fc||j.customer===fc)&&(!fs||j.status===fs)&&(!fm||j.machine===fm);}).forEach(function(j){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><b>'+j.id+'</b></td><td>'+j.customer+'</td><td>'+j.product+'</td><td class="num">'+j.qty+'</td>'+
+        '<td><span class="badge '+pr[j.priority]+'">'+j.priority+'</span></td><td>'+j.stages[j.stage]+'</td><td>'+j.due+'</td>'+
+        '<td><a class="btn btn-sm btn-outline" href="job-details.html">عرض</a></td>';
+      tb.appendChild(tr);
+    });
+  }
+  ['f-c','f-s','f-m'].forEach(function(id){document.getElementById(id).onchange=draw;});
+  draw();
+})();
+</script>
+</body>
+</html>

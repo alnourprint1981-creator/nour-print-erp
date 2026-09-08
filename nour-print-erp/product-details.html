@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تفاصيل الموديل — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>HC-02 — قاع وغطاء وقاعدة هارد كوفر</h1></div>
+<div class="note"><b>تنبيه (FR-MODEL-03):</b> مقاسات هذا الموديل (وكل الموديلات) لا تُثبَّت داخل النظام — تُدخل حسب طلب العميل في كل عملية تسعير.</div>
+<div class="card">
+  <h2>بيانات الموديل (الموديل المرجعي للتسعير — FR-MODEL-02)</h2>
+  <table class="table">
+    <tr><th>كود الموديل</th><td>HC-02</td><th>نوع المنتج</th><td>هارد كوفر</td></tr>
+    <tr><th>الوصف</th><td colspan="3">قاع وغطاء وقاعدة — علبة هارد كوبر فاخرة بثلاث قطع</td></tr>
+    <tr><th>الخامات</th><td colspan="3">كرتون مقوى، ورق كوشيه، مخمل، إسفنج، غراء حراري</td></tr>
+    <tr><th>العمليات</th><td colspan="3">طباعة، قص، تكسير، لصق، فويل (اختياري)</td></tr>
+    <tr><th>مراحل الإنتاج</th><td colspan="3">التصميم ← ما قبل الطباعة ← الطباعة ← التشطيب ← القص/التكسير ← التجميع ← الجودة ← التعبئة ← التسليم</td></tr>
+    <tr><th>نسبة الهالك الافتراضية</th><td id="waste" class="num"></td><th>هامش الربح الافتراضي</th><td id="margin" class="num"></td></tr>
+    <tr><th>معادلة التكلفة</th><td colspan="3">تفصيل كامل وفق القسم 7.4 من المتطلبات (خامات + طباعة + سكينة + تكسير + عمالة + غراء + تشغيل + مصروفات + هالك)</td></tr>
+  </table>
+  <a href="pricing.html" class="btn btn-secondary" style="margin-top:14px">تسعير هذا الموديل</a>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "products", breadcrumbs: ['الرئيسية', 'المنتجات', 'HC-02'] });
+</script>
+<script>
+document.getElementById('waste').textContent=pricingDefaults.wastePercentDefault+'%';
+document.getElementById('margin').textContent=pricingDefaults.profitMarginDefault+'%';
+</script>
+</body>
+</html>

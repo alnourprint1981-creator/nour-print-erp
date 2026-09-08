@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الإنتاج — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>الإنتاج</h1><a href="production-board.html" class="btn btn-primary">لوحة الإنتاج البصرية (Kanban)</a></div>
+<div class="card">
+  <h2>مراحل الإنتاج لأوامر التشغيل (FR-PRODCTRL-01)</h2>
+  <table class="table">
+    <thead><tr><th>أمر التشغيل</th><th>المرحلة</th><th>المسؤول</th><th>الماكينة</th><th>المطلوب</th><th>المنتَج</th><th>الهالك</th><th>السليم</th><th data-fr="FR-PRODCTRL-02">الحالة</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>الماكينات (FR-MACH-01)</h2>
+  <table class="table">
+    <thead><tr><th>الاسم</th><th>النوع</th><th>القسم</th><th>الطاقة الإنتاجية</th><th>تكلفة التشغيل</th><th>الحالة</th></tr></thead>
+    <tbody id="mrows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "production", breadcrumbs: ['الرئيسية', 'الإنتاج'] });
+</script>
+<script>
+(function(){
+  var st={'لم يبدأ':'badge-gray','جاري التنفيذ':'badge-orange','متوقف':'badge-red','مكتمل':'badge-green','جاهز للتسليم':'badge-green'};
+  var rows=[
+    ['J-2026-010','الطباعة','محمود','هيدلبرج 4 ألوان',100,100,3,97,'مكتمل'],
+    ['J-2026-010','القص/التكسير','محمود','ماكينة قص بولار',100,60,2,58,'جاري التنفيذ'],
+    ['J-2026-011','الطباعة','محمود','هيدلبرج 4 ألوان',300,180,5,175,'جاري التنفيذ'],
+    ['J-2026-013','التعبئة','خالد','—',500,500,0,500,'جاهز للتسليم']
+  ];
+  var tb=document.getElementById('rows');
+  rows.forEach(function(r){
+    tb.innerHTML+='<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="num">'+r[4]+'</td><td class="num">'+r[5]+'</td><td class="num">'+r[6]+'</td><td class="num">'+r[7]+'</td><td><span class="badge '+st[r[8]]+'">'+r[8]+'</span></td></tr>';
+  });
+  var ms={'تعمل':'badge-green','متوقفة':'badge-red','صيانة':'badge-yellow','خارج الخدمة':'badge-gray'};
+  var mt=document.getElementById('mrows');
+  machines.forEach(function(m){
+    mt.innerHTML+='<tr><td><b>'+m.name+'</b></td><td>'+m.type+'</td><td>'+m.section+'</td><td>'+m.capacity+'</td><td class="num">'+m.opCost+' ج.م</td><td><span class="badge '+ms[m.status]+'">'+m.status+'</span></td></tr>';
+  });
+})();
+</script>
+</body>
+</html>

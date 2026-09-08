@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مراقبة الجودة — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>مراقبة الجودة (QC)</h1></div>
+<div class="card">
+  <table class="table">
+    <thead><tr><th>أمر التشغيل</th><th data-fr="FR-QC-01">بند الفحص</th><th>المواصفة</th><th>النتيجة</th><th data-fr="FR-QC-02">الحالة</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "production", breadcrumbs: ['الرئيسية', 'الإنتاج', 'مراقبة الجودة'] });
+</script>
+<script>
+(function(){
+  var checks=['المقاس','اللون','الطباعة','القص','التكسير','اللصق','التشطيب','التجميع','التغليف'];
+  var rows=[
+    ['J-2026-013','مقبول','مقبول'],['J-2026-013','مقبول','مقبول'],['J-2026-013','مقبول','مقبول'],
+    ['J-2026-013','مقبول','مقبول'],['J-2026-013','مقبول','مقبول'],['J-2026-013','مرفوض','يحتاج إعادة تشغيل'],
+    ['J-2026-010','مقبول','مقبول'],['J-2026-010','مقبول','مقبول'],['J-2026-011','مقبول','مقبول']
+  ];
+  var st={'مقبول':'badge-green','مرفوض':'badge-red','يحتاج إعدة تشغيل':'badge-yellow','يحتاج إعادة تشغيل':'badge-yellow'};
+  var tb=document.getElementById('rows');
+  rows.forEach(function(r,i){
+    tb.innerHTML+='<tr><td><b>'+r[0]+'</b></td><td>'+checks[i%checks.length]+'</td><td>حسب مواصفات العميل</td><td>'+r[1]+'</td><td><span class="badge '+st[r[2]]+'">'+r[2]+'</span></td></tr>';
+  });
+})();
+</script>
+</body>
+</html>

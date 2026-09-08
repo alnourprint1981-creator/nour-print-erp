@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المصروفات — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+<div class="page-title"><h1>المصروفات</h1>
+  <button class="btn btn-primary" onclick="alert('نموذج مصروف جديد (شكلي)')" data-fr="FR-EXP-01">+ مصروف جديد</button>
+</div>
+<div class="card">
+  <div class="table-wrap"><table class="table">
+    <thead><tr><th data-fr="FR-EXP-02">التاريخ</th><th data-fr="FR-EXP-01">النوع</th><th>القيمة</th><th>الوصف</th><th>المسؤول</th></tr></thead>
+    <tbody>
+      <tr><td>2026-09-05</td><td><span class="badge badge-navy">كهرباء</span></td><td class="num">3,500 ج.م</td><td>فاتورة كهرباء أغسطس</td><td>منى</td></tr>
+      <tr><td>2026-09-04</td><td><span class="badge badge-navy">صيانة</span></td><td class="num">800 ج.م</td><td>صيانة ماكينة التكسير</td><td>محمود</td></tr>
+      <tr><td>2026-09-03</td><td><span class="badge badge-navy">نقل</span></td><td class="num">450 ج.م</td><td>توصيل خامات من المورد</td><td>خالد</td></tr>
+      <tr><td>2026-09-01</td><td><span class="badge badge-navy">أجور</span></td><td class="num">18,000 ج.م</td><td>مرتبات أسبوعية</td><td>منى</td></tr>
+      <tr><td>2026-08-30</td><td><span class="badge badge-navy">إيجار</span></td><td class="num">12,000 ج.م</td><td>إيجار شهر أغسطس</td><td>منى</td></tr>
+      <tr><td>2026-08-28</td><td><span class="badge badge-navy">مصروفات نثرية</span></td><td class="num">220 ج.م</td><td>مستلزمات مكتبية</td><td>أحمد</td></tr>
+      <tr><td>2026-08-26</td><td><span class="badge badge-navy">خدمات خارجية</span></td><td class="num">1,200 ج.م</td><td>تصميمات خارجية لعميل</td><td>أحمد</td></tr>
+    </tbody>
+  </table></div>
+</div>
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script>renderAppShell({ activePage: "expenses", breadcrumbs: ["الرئيسية","المصروفات"] });</script>
+</body>
+</html>

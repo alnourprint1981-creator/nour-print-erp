@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عميل جديد — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>عميل جديد</h1></div>
+<div class="card">
+  <h2>بيانات العميل</h2>
+  <form onsubmit="event.preventDefault();alert('تم حفظ العميل (شكلي — لا يوجد Backend في المرحلة الأولى');">
+    <div class="form-row">
+      <div class="form-group"><label>رقم العميل</label><input value="تلقائي" disabled></div>
+      <div class="form-group"><label>اسم العميل *</label><input required data-fr="FR-CRM-01"></div>
+      <div class="form-group"><label>اسم الشركة</label><input data-fr="FR-CRM-01"></div>
+      <div class="form-group"><label>نوع العميل</label><select data-fr="FR-CRM-03"><option>شركة</option><option>مصنع</option><option>متجر</option><option>تاجر جملة</option><option>متجر إلكتروني</option><option>فرد</option><option>عميل دائم</option><option>عميل جديد</option></select></div>
+      <div class="form-group"><label>الهاتف</label><input data-fr="FR-CRM-01"></div>
+      <div class="form-group"><label>WhatsApp</label><input data-fr="FR-CRM-01"></div>
+      <div class="form-group"><label>البريد الإلكتروني</label><input type="email" data-fr="FR-CRM-01"></div>
+      <div class="form-group"><label>العنوان</label><input data-fr="FR-CRM-01"></div>
+    </div>
+    <div class="form-group"><label>ملاحظات</label><textarea rows="3" data-fr="FR-CRM-01"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>الرقم الضريبي (قابل للتفعيل مستقبلًا)</label><input disabled placeholder="FR-CRM-02 — سيُفعَّل لاحقًا"></div>
+      <div class="form-group"><label>السجل التجاري (قابل للتفعيل مستقبلًا)</label><input disabled placeholder="FR-CRM-02 — سيُفعَّل لاحقًا"></div>
+    </div>
+    <button class="btn btn-primary" data-fr="AC-01">حفظ العميل</button>
+    <a href="customers.html" class="btn btn-outline">إلغاء</a>
+  </form>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "customers", breadcrumbs: ['الرئيسية', 'العملاء', 'عميل جديد'] });
+</script>
+
+</body>
+</html>

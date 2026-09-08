@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="grid-cards">
+  <div class="kpi" data-fr="FR-DASH-01"><div class="label">إجمالي طلبات اليوم</div><div class="value">12</div></div>
+  <div class="kpi" data-fr="FR-DASH-02"><div class="label">طلبات جديدة</div><div class="value">3</div></div>
+  <div class="kpi" data-fr="FR-DASH-02"><div class="label">قيد التنفيذ</div><div class="value">5</div></div>
+  <div class="kpi red" data-fr="FR-DASH-02"><div class="label">متأخرة</div><div class="value">1</div></div>
+  <div class="kpi green" data-fr="FR-DASH-02"><div class="label">جاهزة</div><div class="value">2</div></div>
+  <div class="kpi green" data-fr="FR-DASH-02"><div class="label">مسلَّمة</div><div class="value">1</div></div>
+  <div class="kpi orange" data-fr="FR-DASH-03"><div class="label">إجمالي المبيعات (ج.م)</div><div class="value">64,850</div></div>
+  <div class="kpi" data-fr="FR-DASH-03"><div class="label">إجمالي التكلفة (ج.م)</div><div class="value">43,200</div></div>
+  <div class="kpi green" data-fr="FR-DASH-03"><div class="label">إجمالي الأرباح (ج.م)</div><div class="value">21,650</div></div>
+  <div class="kpi" data-fr="FR-DASH-04"><div class="label">قيمة المخزون (ج.م)</div><div class="value">38,400</div></div>
+  <div class="kpi red" data-fr="FR-DASH-04"><div class="label">خامات قاربت على النفاد</div><div class="value">2 صنف</div></div>
+</div>
+<!-- TODO: ربط بالبيانات الفعلية لاحقًا -->
+<div class="card">
+  <h2>أوامر التشغيل الحالية</h2>
+  <table class="table" data-fr="FR-DASHPROD-01">
+    <thead><tr>
+      <th data-fr="FR-DASHPROD-01">رقم الأمر</th><th>العميل</th><th>المرحلة الحالية</th>
+      <th>نسبة الإنجاز</th><th data-fr="FR-DASHPROD-02">الماكينة</th><th data-fr="FR-DASHPROD-02">موعد التسليم</th>
+    </tr></thead>
+    <tbody id="dash-jobs"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "dashboard", breadcrumbs: ['الرئيسية'] });
+</script>
+<script>
+(function(){
+  var tb=document.getElementById('dash-jobs');
+  jobs.forEach(function(j){
+    var pct=Math.round(j.stage/(j.stages.length-1)*100);
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><b>'+j.id+'</b></td><td>'+j.customer+'</td><td>'+j.stages[j.stage]+'</td>'+
+      '<td><div class="progress"><i style="width:'+pct+'%"></i></div>'+pct+'%</td>'+
+      '<td>'+j.machine+'</td><td>'+j.due+'</td>';
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

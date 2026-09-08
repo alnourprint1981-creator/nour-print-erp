@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حركات المخزون — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>حركات المخزون</h1></div>
+<div class="card">
+  <div class="form-row" style="margin-bottom:14px">
+    <div class="form-group"><label>نوع الحركة</label><select id="f-t"><option value="">الكل</option><option>إضافة شراء</option><option>صرف للإنتاج</option><option>إرجاع</option><option>هالك</option><option>تسوية</option><option>نقل بين المخازن</option><option>رصيد افتتاحي</option></select></div>
+  </div>
+  <table class="table">
+    <thead><tr><th data-fr="FR-INV-01">التاريخ</th><th>النوع</th><th>الخامة</th><th>الكمية</th><th>الوحدة</th><th>من/إلى</th><th>البيان</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "inventory", breadcrumbs: ['الرئيسية', 'المخزون', 'الحركات'] });
+</script>
+<script>
+(function(){
+  var data=[
+    ['2026-09-05','صرف للإنتاج','كرتون مقوى 2مم',50,'ورقة','مخزن رئيسي → J-2026-010','صرف لأمر تشغيل'],
+    ['2026-09-05','صرف للإنتاج','ورق كوشيه 300جم',120,'ورقة','مخزن رئيسي → J-2026-010','صرف لأمر تشغيل'],
+    ['2026-09-03','إضافة شراء','فويل ذهبي',10,'رول','مورد: شركة النيل للورق','فاتورة شراء #88'],
+    ['2026-09-02','هالك','ورق أبيض مقوى',15,'ورقة','مخزن 2','تلف تخزين'],
+    ['2026-09-01','نقل بين المخازن','غراء حراري',5,'كجم','مخزن 2 → مخزن رئيسي','تغذية خط الإنتاج'],
+    ['2026-08-30','إضافة شراء','إسفنج 3مم',20,'متر','مورد: مكتب الخامات','فاتورة شراء #87'],
+    ['2026-08-25','تسوية','مخمل أحمر',2,'متر','مخزن رئيسي','جرد دوري'],
+    ['2026-08-20','إرجاع','سلوفان شفاف',1,'رول','من J-2026-007','زيادة صرف'],
+    ['2026-08-01','رصيد افتتاحي','كرتون مقوى 2مم',300,'ورقة','مخزن رئيسي','رصيد بداية المدة']
+  ];
+  var tb=document.getElementById('rows');
+  function draw(){
+    var f=document.getElementById('f-t').value; tb.innerHTML='';
+    data.filter(function(r){return !f||r[1]===f;}).forEach(function(r){
+      tb.innerHTML+='<tr><td>'+r[0]+'</td><td><span class="badge badge-navy">'+r[1]+'</span></td><td>'+r[2]+'</td><td class="num">'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+r[6]+'</td></tr>';
+    });
+  }
+  document.getElementById('f-t').onchange=draw; draw();
+})();
+</script>
+</body>
+</html>

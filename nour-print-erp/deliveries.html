@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التسليم — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>التسليم</h1></div>
+<div class="card">
+  <table class="table">
+    <thead><tr><th data-fr="FR-DELIV-01">رقم الطلب</th><th>العميل</th><th>الكمية</th><th>المسلَّم</th><th>التاريخ</th><th>المسؤول</th><th>الحالة</th><th>ملاحظات</th></tr></thead>
+    <tbody>
+      <tr><td>J-2026-013</td><td>متجر روز للعطور</td><td class="num">500</td><td class="num">0</td><td>—</td><td>خالد</td><td><span class="badge badge-yellow">بانتظار التسليم</span></td><td>—</td></tr>
+      <tr><td>J-2026-009</td><td>شركة لمسة للتجميل</td><td class="num">150</td><td class="num">150</td><td>2026-09-05</td><td>خالد</td><td><span class="badge badge-green">مسلَّم بالكامل</span></td><td>استلام نهائي</td></tr>
+      <tr><td>J-2026-008</td><td>أ/ محمد سمير</td><td class="num">80</td><td class="num">50</td><td>2026-09-04</td><td>خالد</td><td><span class="badge badge-navy">تسليم جزئي</span></td><td>الباقي خلال أسبوع</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "production", breadcrumbs: ['الرئيسية', 'الإنتاج', 'التسليم'] });
+</script>
+
+</body>
+</html>

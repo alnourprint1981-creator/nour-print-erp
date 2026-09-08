@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المنتجات والموديلات — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>المنتجات والموديلات</h1><a href="product-create.html" class="btn btn-primary" data-fr="FR-PROD-02">+ منتج / موديل جديد</a></div>
+<div class="note">مبدأ أساسي (<b>FR-PROD-01</b>): المنتج كيان منفصل عن السعر — السعر يُحسب ديناميكيًا من الخامات والعمالة والتشغيل والهالك والمصروفات وهامش الربح.</div>
+<div class="card">
+  <table class="table">
+    <thead><tr><th data-fr="FR-MODEL-01">كود الموديل</th><th data-fr="FR-MODEL-01">اسم الموديل</th><th>نوع المنتج</th><th>الوصف</th><th></th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "products", breadcrumbs: ['الرئيسية', 'المنتجات'] });
+</script>
+<script>
+(function(){
+  var tb=document.getElementById('rows');
+  products.forEach(function(p){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><b>'+p.code+'</b></td><td>'+p.name+'</td><td><span class="badge badge-navy">'+p.category+'</span></td><td>'+p.description+'</td>'+
+      '<td><a class="btn btn-sm btn-outline" href="product-details.html">التفاصيل</a></td>';
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

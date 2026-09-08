@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التقارير — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+<div class="page-title"><h1>التقارير</h1></div>
+<div class="card">
+  <div class="tabs">
+    <button class="active" onclick="showTab(0,this)">المبيعات (FR-REPORT-01)</button>
+    <button onclick="showTab(1,this)">الإنتاج (FR-REPORT-02)</button>
+    <button onclick="showTab(2,this)">الأرباح (FR-REPORT-03)</button>
+    <button onclick="showTab(3,this)">المخزون (FR-REPORT-04)</button>
+  </div>
+  <div class="tab-pane active">
+    <div class="table-wrap"><table class="table"><thead><tr><th>الفترة</th><th>عدد الطلبات</th><th>المبيعات</th></tr></thead><tbody>
+      <tr><td>يومي (اليوم)</td><td class="num">12</td><td class="num">9,400 ج.م</td></tr>
+      <tr><td>أسبوعي</td><td class="num">54</td><td class="num">38,200 ج.م</td></tr>
+      <tr><td>شهري (أغسطس)</td><td class="num">201</td><td class="num">148,000 ج.م</td></tr>
+      <tr><td>سنوي (2026)</td><td class="num">1,240</td><td class="num">910,000 ج.م</td></tr>
+      <tr><td>حسب العميل: النور للتجارة</td><td class="num">34</td><td class="num">48,300 ج.م</td></tr>
+      <tr><td>حسب المنتج: HC-02</td><td class="num">58</td><td class="num">72,500 ج.م</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane">
+    <div class="table-wrap"><table class="table"><thead><tr><th>المؤشر</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>الإنتاج اليومي (قطعة)</td><td class="num">960</td></tr>
+      <tr><td>الإنتاج الشهري (قطعة)</td><td class="num">21,400</td></tr>
+      <tr><td>أداء أفضل ماكينة</td><td>هيدلبرج 4 ألوان — 92%</td></tr>
+      <tr><td>أسرع مرحلة إنجازًا</td><td>التعبئة</td></tr>
+      <tr><td>متوسط الهالك</td><td class="num">4.2%</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane">
+    <div class="table-wrap"><table class="table"><thead><tr><th>البند</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>إجمالي المبيعات</td><td class="num">148,000 ج.م</td></tr>
+      <tr><td>إجمالي التكلفة</td><td class="num">98,500 ج.م</td></tr>
+      <tr><td>إجمالي الربح</td><td class="num">49,500 ج.م</td></tr>
+      <tr><td>هامش الربح</td><td class="num">33.4%</td></tr>
+      <tr><td>أكثر منتج ربحًا</td><td>HC-02 — 18,900 ج.م</td></tr>
+      <tr><td>أكثر عميل ربحًا</td><td>شركة النور للتجارة — 12,400 ج.م</td></tr>
+      <tr><td>ربح تقديري مقابل فعلي</td><td>انحراف +2.1% (زيادة هالك الإسفنج)</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane">
+    <div class="table-wrap"><table class="table"><thead><tr><th>البند</th><th>القيمة</th></tr></thead><tbody>
+      <tr><td>قيمة المخزون الحالي</td><td class="num">38,400 ج.م</td></tr>
+      <tr><td>الأصناف الناقصة</td><td class="num">2 صنف (ورق أبيض، إسفنج)</td></tr>
+      <tr><td>أكثر صنف حركة</td><td>كرتون مقوى 2مم</td></tr>
+    </tbody></table></div>
+  </div>
+</div>
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script>
+renderAppShell({ activePage: "reports", breadcrumbs: ["الرئيسية","التقارير"] });
+function showTab(i,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-pane')[i].classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الموردون — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>الموردون</h1></div>
+<div class="card">
+  <table class="table">
+    <thead><tr><th data-fr="FR-SUP-01">الاسم</th><th>الهاتف</th><th>WhatsApp</th><th>العنوان</th><th>الأصناف الموردة</th><th>آخر سعر شراء</th><th>آخر شراء</th><th>إجمالي المشتريات</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "suppliers", breadcrumbs: ['الرئيسية', 'المخزون', 'الموردون'] });
+</script>
+<script>
+(function(){
+  var tb=document.getElementById('rows');
+  suppliers.forEach(function(s){
+    tb.innerHTML+='<tr><td><b>'+s.name+'</b></td><td class="num">'+s.phone+'</td><td class="num">'+s.whatsapp+'</td><td>'+s.address+'</td><td>'+s.items+'</td><td class="num">'+s.lastPrice+'</td><td>'+s.lastPurchase+'</td><td class="num">'+s.totalPurchases.toLocaleString()+' ج.م</td></tr>';
+  });
+})();
+</script>
+</body>
+</html>

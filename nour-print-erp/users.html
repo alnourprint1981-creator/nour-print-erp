@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المستخدمون — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+<div class="page-title"><h1>المستخدمون والصلاحيات</h1></div>
+<div class="note">الأدوار شكلية في هذه المرحلة؛ المصادقة والصلاحيات الفعلية على مستوى الخادم تأتي لاحقًا (<b>NFR-04</b>).</div>
+<div class="card">
+  <div class="table-wrap"><table class="table">
+    <thead><tr><th>المستخدم</th><th data-fr="FR-USER-01">الدور</th><th>الصلاحيات</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</div>
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "users", breadcrumbs: ["الرئيسية","المستخدمون"] });
+var roleBadge={'مدير':'badge-navy','مبيعات':'badge-orange','إنتاج':'badge-green','مخزن':'badge-yellow','محاسب':'badge-red','مصمم':'badge-gray'};
+var tb=document.getElementById('rows');
+users.forEach(function(u){
+  tb.innerHTML+='<tr><td><b>'+u.name+'</b></td><td><span class="badge '+roleBadge[u.role]+'">'+u.role+'</span></td><td>'+u.permissions+'</td></tr>';
+});
+</script>
+</body>
+</html>

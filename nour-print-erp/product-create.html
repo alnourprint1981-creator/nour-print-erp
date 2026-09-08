@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء موديل — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>إنشاء موديل جديد</h1></div>
+<div class="card">
+  <form onsubmit="event.preventDefault();alert('تم حفظ الموديل (شكلي)');">
+    <div class="form-row">
+      <div class="form-group"><label>كود الموديل *</label><input required data-fr="FR-MODEL-01" placeholder="مثال: HC-03"></div>
+      <div class="form-group"><label>اسم الموديل *</label><input required data-fr="FR-MODEL-01"></div>
+      <div class="form-group"><label>نوع المنتج</label><select data-fr="FR-MODEL-01"><option>هارد كوفر</option><option>علب هدايا</option><option>علب عطور</option><option>علب مستحضرات تجميل</option><option>علب مجوهرات</option><option>علب إكسسوارات</option><option>بوكسات دعائية</option><option>علب حسب الطلب</option></select></div>
+    </div>
+    <div class="form-group"><label>الوصف</label><textarea rows="2" data-fr="FR-MODEL-01"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>الطول (سم)</label><input type="number" data-fr="FR-MODEL-03"></div>
+      <div class="form-group"><label>العرض (سم)</label><input type="number" data-fr="FR-MODEL-03"></div>
+      <div class="form-group"><label>الارتفاع (سم)</label><input type="number" data-fr="FR-MODEL-03"></div>
+    </div>
+    <div class="form-group"><label>الخامات المرتبطة (اختيار متعدد)</label><select multiple size="6" data-fr="FR-MODEL-01"><option value="M-001">كرتون مقوى 2مم (M-001)</option><option value="M-002">ورق كوشيه 300جم (M-002)</option><option value="M-003">ورق نباتي (M-003)</option><option value="M-005">غراء حراري (M-005)</option><option value="M-006">مخمل أحمر (M-006)</option><option value="M-007">إسفنج 3مم (M-007)</option><option value="M-008">فويل ذهبي (M-008)</option><option value="M-009">سلوفان شفاف (M-009)</option><option value="M-010">مغناطيس شريط (M-010)</option></select></div>
+    <div class="form-group"><label>العمليات (FR-MODEL-01)</label>
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <label><input type="checkbox"> طباعة</label><label><input type="checkbox"> قص</label>
+        <label><input type="checkbox"> تكسير</label><label><input type="checkbox"> لصق</label>
+        <label><input type="checkbox"> فويل</label><label><input type="checkbox"> سلوفان</label>
+        <label><input type="checkbox"> تجليد</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>نسبة الهالك %</label><input type="number" id="waste" data-fr="FR-PRICE-03"></div>
+      <div class="form-group"><label>هامش الربح %</label><input type="number" id="margin" data-fr="FR-PRICE-02"></div>
+    </div>
+    <div class="form-group"><label>ملاحظات</label><textarea rows="2"></textarea></div>
+    <button class="btn btn-primary" data-fr="AC-02">حفظ الموديل</button>
+    <a href="products.html" class="btn btn-outline">إلغاء</a>
+  </form>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "products", breadcrumbs: ['الرئيسية', 'المنتجات', 'موديل جديد'] });
+</script>
+<script>
+/* القيم الافتراضية تُملأ من mock-data.js ولا تُكتب يدويًا (CON-06) */
+document.getElementById('waste').value=pricingDefaults.wastePercentDefault;
+document.getElementById('margin').value=pricingDefaults.profitMarginDefault;
+</script>
+</body>
+</html>

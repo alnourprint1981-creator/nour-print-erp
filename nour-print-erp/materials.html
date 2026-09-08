@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخامات — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+<div class="page-title"><h1>الخامات</h1>
+  <div>
+    <button class="btn btn-primary" onclick="openAdd()" data-fr="FR-MAT-01">+ إضافة خامة جديدة</button>
+    <button class="btn btn-outline btn-sm" onclick="if(confirm('سيتم استرجاع قائمة الخامات الافتراضية وحذف كل تعديلاتك. متابعة؟'))resetMaterials();">استرجاع الافتراضي</button>
+  </div>
+</div>
+<div class="note">كل الأسعار أدناه بيانات قابلة للتعديل مباشرة من هذه الصفحة (<b>FR-MAT-03 / CON-06</b>). أي تعديل يُحفظ في ذاكرة المتصفح ويؤثر على التسعير الجديد فقط، ولا يغيّر عروض الأسعار المحفوظة سابقًا (Snapshot).</div>
+
+<!-- لوحة الإضافة / التعديل -->
+<div class="card" id="editor" style="display:none;border-top:4px solid var(--color-orange)">
+  <h2 id="editor-title">إضافة خامة جديدة</h2>
+  <form onsubmit="return saveMaterial(event);">
+    <input type="hidden" id="e-index" value="">
+    <div class="form-row">
+      <div class="form-group"><label>كود الخامة *</label><input id="e-code" required data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>اسم الخامة *</label><input id="e-name" required data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>النوع</label><select id="e-type" data-fr="FR-MAT-02">
+        <option>كرتون</option><option>ورق</option><option>ورق نباتي</option><option>ورق أبيض</option>
+        <option>غراء</option><option>مخمل</option><option>إسفنج</option><option>فويل</option>
+        <option>سلوفان</option><option>مغناطيس</option><option>خامات هارد كوفر</option><option>مواد تغليف</option>
+      </select></div>
+      <div class="form-group"><label>وحدة القياس</label><select id="e-unit" data-fr="FR-MAT-01">
+        <option>ورقة</option><option>كجم</option><option>متر</option><option>رول</option><option>قطعة</option><option>لتر</option>
+      </select></div>
+      <div class="form-group"><label>سعر الشراء *</label><input id="e-price" type="number" step="0.01" min="0" required data-fr="FR-MAT-03"></div>
+      <div class="form-group"><label>متوسط التكلفة</label><input id="e-avg" type="number" step="0.01" min="0" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>الرصيد الحالي</label><input id="e-stock" type="number" min="0" value="0" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>الحد الأدنى</label><input id="e-min" type="number" min="0" value="0" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>المورد</label><input id="e-supplier" data-fr="FR-MAT-01"></div>
+      <div class="form-group"><label>مكان التخزين</label><input id="e-location" placeholder="مخزن رئيسي" data-fr="FR-MAT-01"></div>
+    </div>
+    <button type="submit" class="btn btn-primary" data-fr="AC-03">حفظ الخامة</button>
+    <button type="button" class="btn btn-outline" onclick="closeEditor()">إلغاء</button>
+  </form>
+</div>
+
+<div class="card">
+  <div class="table-wrap"><table class="table">
+    <thead><tr>
+      <th data-fr="FR-MAT-01">الكود</th><th data-fr="FR-MAT-01">الاسم</th><th data-fr="FR-MAT-02">النوع</th>
+      <th data-fr="FR-MAT-01">الوحدة</th><th data-fr="FR-MAT-01">سعر الشراء</th><th>متوسط التكلفة</th>
+      <th data-fr="FR-MAT-01">الرصيد الحالي</th><th data-fr="FR-MAT-01">الحد الأدنى</th>
+      <th>المورد</th><th>مكان التخزين</th><th>إجراءات</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</div>
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "materials", breadcrumbs: ["الرئيسية","الخامات"] });
+
+var $=function(id){return document.getElementById(id);};
+
+function render(){
+  var tb=$('rows'); tb.innerHTML='';
+  materials.forEach(function(m,i){
+    var isLow=Number(m.currentStock)<Number(m.minStock);
+    var tr=document.createElement('tr');
+    if(isLow) tr.className='low-stock';
+    tr.innerHTML=
+      '<td><b>'+m.code+'</b></td><td>'+m.name+'</td>'+
+      '<td><span class="badge badge-navy">'+m.type+'</span></td><td>'+m.unit+'</td>'+
+      '<td class="num">'+m.purchasePrice+'</td><td class="num">'+(m.avgCost!=null?m.avgCost:'—')+'</td>'+
+      '<td class="num"><b style="color:'+(isLow?'var(--color-red)':'inherit')+'">'+m.currentStock+'</b></td>'+
+      '<td class="num">'+m.minStock+'</td><td>'+(m.supplier||'—')+'</td><td>'+(m.location||'—')+'</td>'+
+      '<td style="white-space:nowrap">'+
+        '<button class="btn btn-sm btn-outline" onclick="openEdit('+i+')">تعديل</button> '+
+        '<button class="btn btn-sm btn-secondary" onclick="deleteMaterial('+i+')">حذف</button>'+
+      '</td>';
+    tb.appendChild(tr);
+  });
+}
+
+/* إنشاء كود تلقائي للخامة الجديدة: M-011, M-012... */
+function nextCode(){
+  var max=0;
+  materials.forEach(function(m){
+    var n=parseInt(String(m.code).replace(/[^0-9]/g,''),10);
+    if(!isNaN(n)&&n>max) max=n;
+  });
+  return 'M-'+String(max+1).padStart(3,'0');
+}
+
+function openAdd(){
+  $('editor-title').textContent='إضافة خامة جديدة';
+  $('e-index').value='';
+  ['e-code','e-name','e-price','e-avg','e-stock','e-min','e-supplier','e-location'].forEach(function(id){$(id).value='';});
+  $('e-code').value=nextCode();
+  $('e-stock').value=0; $('e-min').value=0;
+  $('editor').style.display='block';
+  $('editor').scrollIntoView({behavior:'smooth'});
+}
+
+function openEdit(i){
+  var m=materials[i];
+  $('editor-title').textContent='تعديل: '+m.name+' ('+m.code+')';
+  $('e-index').value=i;
+  $('e-code').value=m.code; $('e-name').value=m.name; $('e-type').value=m.type; $('e-unit').value=m.unit;
+  $('e-price').value=m.purchasePrice; $('e-avg').value=(m.avgCost!=null?m.avgCost:'');
+  $('e-stock').value=m.currentStock; $('e-min').value=m.minStock;
+  $('e-supplier').value=(m.supplier||''); $('e-location').value=(m.location||'');
+  $('editor').style.display='block';
+  $('editor').scrollIntoView({behavior:'smooth'});
+}
+
+function closeEditor(){ $('editor').style.display='none'; }
+
+function saveMaterial(e){
+  e.preventDefault();
+  var i=$('e-index').value;
+  var obj={
+    code: $('e-code').value.trim(),
+    name: $('e-name').value.trim(),
+    type: $('e-type').value,
+    unit: $('e-unit').value,
+    purchasePrice: parseFloat($('e-price').value)||0,
+    avgCost: parseFloat($('e-avg').value)||parseFloat($('e-price').value)||0,
+    minStock: parseInt($('e-min').value)||0,
+    currentStock: parseInt($('e-stock').value)||0,
+    supplier: $('e-supplier').value.trim(),
+    location: $('e-location').value.trim()||'مخزن رئيسي'
+  };
+  if(i===''){ materials.push(obj); }
+  else { materials[parseInt(i,10)]=obj; }
+  saveMaterials();
+  render();
+  closeEditor();
+  alert(i===''?'تمت إضافة الخامة بنجاح':'تم حفظ التعديلات بنجاح');
+  return false;
+}
+
+function deleteMaterial(i){
+  var m=materials[i];
+  if(confirm('هل أنت متأكد من حذف الخامة "'+m.name+'" ('+m.code+')؟\nسيتم حذفها من القائمة ومن شاشة التسعير.')){
+    materials.splice(i,1);
+    saveMaterials();
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>

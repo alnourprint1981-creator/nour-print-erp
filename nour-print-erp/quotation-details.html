@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تفاصيل عرض سعر — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>عرض سعر Q-2026-001</h1>
+  <button class="btn btn-secondary" onclick="alert('تم تحويل العرض إلى أمر تشغيل J-2026-014 مع تجميد التكلفة (Snapshot)')" data-fr="FR-QUOTE-02">تحويل إلى أمر تشغيل</button>
+</div>
+<div class="note"><b>Snapshot (FR-SNAP-01 / FR-SNAP-02):</b> عند التحويل تُجمَّد تكلفة هذا العرض وقت الاعتماد ولا تتأثر بأي تغيير لاحق في أسعار الخامات. يميّز النظام بين: التكلفة الحالية، التكلفة التاريخية، تكلفة العرض، وتكلفة الإنتاج الفعلية.</div>
+<div class="grid-cards">
+  <div class="kpi"><div class="label">العميل</div><div class="value" style="font-size:15px">شركة النور للتجارة</div></div>
+  <div class="kpi"><div class="label">المنتج</div><div class="value" style="font-size:15px">HC-02 — قاع وغطاء وقاعدة</div></div>
+  <div class="kpi orange"><div class="label">الحالة</div><div class="value" style="font-size:15px"><span class="badge badge-green">مقبول</span></div></div>
+</div>
+<div class="card">
+  <h2>تفصيل التكلفة المحفوظة (تكلفة العرض)</h2>
+  <table class="table cost-table"><tbody>
+    <tr><td>الكرتون</td><td class="num">1,575.00 ج.م</td></tr>
+    <tr><td>الورق</td><td class="num">1,008.00 ج.م</td></tr>
+    <tr><td>الطباعة</td><td class="num">100.00 ج.م</td></tr>
+    <tr><td>السكينة</td><td class="num">1,000.00 ج.م</td></tr>
+    <tr><td>التكسير</td><td class="num">200.00 ج.م</td></tr>
+    <tr><td>العمالة</td><td class="num">500.00 ج.م</td></tr>
+    <tr><td>الغراء</td><td class="num">50.00 ج.م</td></tr>
+    <tr><td>الكهرباء والتشغيل</td><td class="num">50.00 ج.م</td></tr>
+    <tr><td>الإسفنج والمخمل</td><td class="num">500.00 ج.م</td></tr>
+    <tr><td>المصروفات</td><td class="num">100.00 ج.م</td></tr>
+    <tr><td>الهالك (5%)</td><td class="num">254.15 ج.م</td></tr>
+    <tr class="subtotal"><td>إجمالي التكلفة</td><td class="num">5,337.15 ج.م</td></tr>
+    <tr class="subtotal"><td>تكلفة الوحدة</td><td class="num">53.37 ج.م</td></tr>
+    <tr><td>هامش الربح (25%)</td><td class="num">13.34 ج.م</td></tr>
+    <tr class="unit-cost"><td>سعر البيع للوحدة</td><td class="num">66.71 ج.م</td></tr>
+    <tr class="grand-total"><td>الإجمالي النهائي (100 وحدة)</td><td class="num">6,671.44 ج.م</td></tr>
+  </tbody></table>
+  <p style="font-size:11.5px;color:var(--color-gray);margin-top:8px">※ هذه القيم محفوظة وقت إنشاء العرض (2026-09-01) ولا تتغير تلقائيًا — مبدأ FR-SNAP-03.</p>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "quotations", breadcrumbs: ['الرئيسية', 'عروض الأسعار', 'Q-2026-001'] });
+</script>
+
+</body>
+</html>

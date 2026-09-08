@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء عرض سعر — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1>إنشاء عرض سعر</h1></div>
+<div class="note">يستخدم نفس محرك التسعير المشترك <b>pricing-engine.js</b> — لا يوجد تكرار لمنطق الحساب (AC-05).</div>
+<div class="card">
+  <h2>بيانات العرض</h2>
+  <div class="form-row">
+    <div class="form-group"><label>العميل</label><select id="q-customer"></select></div>
+    <div class="form-group"><label>المنتج / الموديل</label><select id="q-product"></select></div>
+    <div class="form-group"><label>الكمية</label><input type="number" id="q-qty" value="100" min="1"></div>
+    <div class="form-group"><label>صلاحية العرض حتى</label><input type="date" id="q-valid" data-fr="FR-QUOTE-01"></div>
+  </div>
+</div>
+<div class="card">
+  <h2>المكونات</h2>
+  <div class="form-row">
+    <div class="form-group"><label>أوراق كرتون</label><input type="number" id="q-sheets" value="50" min="0"></div>
+    <div class="form-group"><label>أوراق ورق</label><input type="number" id="q-paper" value="120" min="0"></div>
+    <div class="form-group"><label>نسبة الهالك %</label><input type="number" id="q-waste" step="0.5"></div>
+    <div class="form-group"><label>هامش الربح %</label><input type="number" id="q-margin" step="0.5"></div>
+  </div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <label><input type="checkbox" id="q-printing" checked> طباعة</label>
+    <label><input type="checkbox" id="q-diecut" checked> سكينة</label>
+    <label><input type="checkbox" id="q-breaking" checked> تكسير</label>
+    <label><input type="checkbox" id="q-sponge" checked> إسفنج ومخمل</label>
+  </div>
+</div>
+<div class="card">
+  <h2>ملخص العرض</h2>
+  <table class="table cost-table"><tbody>
+    <tr><td>إجمالي التكلفة</td><td id="q-total" class="num"></td></tr>
+    <tr><td>تكلفة الوحدة</td><td id="q-unit" class="num"></td></tr>
+    <tr class="unit-cost"><td>سعر البيع للوحدة</td><td id="q-sale" class="num"></td></tr>
+    <tr class="grand-total"><td>الإجمالي النهائي</td><td id="q-grand" class="num"></td></tr>
+  </tbody></table>
+  <button class="btn btn-primary" onclick="alert('تم حفظ عرض السعر (شكلي)')" data-fr="AC-05">حفظ كعرض سعر</button>
+  <a href="quotations.html" class="btn btn-outline">إلغاء</a>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "quotations", breadcrumbs: ['الرئيسية', 'عروض الأسعار', 'عرض جديد'] });
+</script>
+<script src="assets/js/pricing-engine.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  customers.forEach(function(c){$('q-customer').innerHTML+='<option>'+c.name+'</option>';});
+  products.forEach(function(p){$('q-product').innerHTML+='<option>'+p.code+' — '+p.name+'</option>';});
+  $('q-waste').value=pricingDefaults.wastePercentDefault;
+  $('q-margin').value=pricingDefaults.profitMarginDefault;
+  function fmt(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' ج.م';}
+  function calc(){
+    var r=calculateFullQuote({
+      quantity:parseInt($('q-qty').value)||1,
+      wastePercent:parseFloat($('q-waste').value)||0,
+      cardboardSheets:parseFloat($('q-sheets').value)||0,
+      paperSheets:parseFloat($('q-paper').value)||0,
+      operations:{printing:$('q-printing').checked,dieCutting:$('q-diecut').checked,breaking:$('q-breaking').checked,spongeVelvet:$('q-sponge').checked},
+      marginType:'percentage',marginValue:parseFloat($('q-margin').value)||0
+    });
+    $('q-total').textContent=fmt(r.totalCost);
+    $('q-unit').textContent=fmt(r.unitCost);
+    $('q-sale').textContent=fmt(r.unitSalePrice);
+    $('q-grand').textContent=fmt(r.grandTotal);
+  }
+  document.querySelectorAll('#page-content input,#page-content select').forEach(function(el){el.addEventListener('input',calc);el.addEventListener('change',calc);});
+  calc();
+})();
+</script>
+</body>
+</html>

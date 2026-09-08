@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تفاصيل العميل — نظام إدارة مطبعة النور</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<main id="page-content">
+
+<div class="page-title"><h1 id="cname">تفاصيل العميل</h1></div>
+<div class="grid-cards" style="margin-bottom:18px">
+  <div class="kpi" data-fr="FR-CRMHIST-02"><div class="label">تاريخ آخر تعامل</div><div class="value" style="font-size:16px">2026-09-04</div></div>
+  <div class="kpi orange" data-fr="FR-CRMHIST-02"><div class="label">إجمالي قيمة التعاملات (ج.م)</div><div class="value">48,300</div></div>
+</div>
+<div class="card">
+  <div class="tabs">
+    <button class="active" onclick="showTab(0,this)">عروض الأسعار</button>
+    <button onclick="showTab(1,this)">الطلبات</button>
+    <button onclick="showTab(2,this)">الفواتير</button>
+    <button onclick="showTab(3,this)">المدفوعات</button>
+    <button onclick="showTab(4,this)">المنتجات المطلوبة</button>
+    <button onclick="showTab(5,this)">الملاحظات</button>
+  </div>
+  <div class="tab-pane active"><table class="table" id="t-quotes"></table></div>
+  <div class="tab-pane"><table class="table"><thead><tr><th>رقم الطلب</th><th>المنتج</th><th>الكمية</th><th>الحالة</th></tr></thead><tbody id="t-jobs"></tbody></table></div>
+  <div class="tab-pane"><table class="table"><thead><tr><th>رقم الفاتورة</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th></tr></thead><tbody><tr><td>INV-2026-031</td><td class="num">15,750</td><td class="num">10,000</td><td class="num">5,750</td></tr></tbody></table></div>
+  <div class="tab-pane"><table class="table"><thead><tr><th>التاريخ</th><th>المبلغ</th><th>الطريقة</th></tr></thead><tbody><tr><td>2026-09-04</td><td class="num">10,000</td><td>تحويل</td></tr></tbody></table></div>
+  <div class="tab-pane"><table class="table"><thead><tr><th>المنتج</th><th>الكمية الإجمالية</th></tr></thead><tbody><tr><td>HC-02 — قاع وغطاء وقاعدة</td><td class="num">400</td></tr><tr><td>علب تغليف مخصصة</td><td class="num">150</td></tr></tbody></table></div>
+  <div class="tab-pane"><p id="cnotes" style="line-height:2"></p></div>
+</div>
+
+</main>
+<script src="assets/js/shared-layout.js"></script>
+<script src="assets/js/mock-data.js"></script>
+<script>
+renderAppShell({ activePage: "customers", breadcrumbs: ['الرئيسية', 'العملاء', 'تفاصيل العميل'] });
+</script>
+<script>
+(function(){
+  var c=customers[0];
+  document.getElementById('cname').textContent=c.name+' ('+c.code+')';
+  document.getElementById('cnotes').textContent=c.notes||'لا توجد ملاحظات.';
+  var st={ 'مقبول':'badge-green','قيد الانتظار':'badge-yellow','مرسل للعميل':'badge-navy','مسودة':'badge-gray','منتهي':'badge-gray' };
+  var qt=document.getElementById('t-quotes');
+  qt.innerHTML='<thead><tr><th>رقم العرض</th><th>المنتج</th><th>الكمية</th><th>الإجمالي</th><th>الحالة</th></tr></thead>';
+  quotations.filter(function(q){return q.customer===c.name;}).forEach(function(q){
+    qt.innerHTML+='<tr><td><b>'+q.id+'</b></td><td>'+q.product+'</td><td class="num">'+q.qty+'</td><td class="num">'+q.total.toLocaleString()+'</td><td><span class="badge '+(st[q.status]||'badge-gray')+'">'+q.status+'</span></td></tr>';
+  });
+  var jt=document.getElementById('t-jobs');
+  jobs.filter(function(j){return j.customer===c.name;}).forEach(function(j){
+    jt.innerHTML+='<tr><td><b>'+j.id+'</b></td><td>'+j.product+'</td><td class="num">'+j.qty+'</td><td><span class="badge badge-orange">'+j.status+'</span></td></tr>';
+  });
+})();
+function showTab(i,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-pane')[i].classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
